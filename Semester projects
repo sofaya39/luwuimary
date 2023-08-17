@@ -1,0 +1,157 @@
+
+
+#ide <iostream>
+#include <string>
+#include <vector>
+
+// Define a class for storing patient information
+class Patient {
+private:
+    std::string name;
+    std::string dob;
+    // Add other necessary attributes
+
+public:
+    // Constructor
+    Patient(std::string name, std::string dob) {
+        this->name = name;
+        this->dob = dob;
+        // Initialize other attributes
+    }
+
+    // Getters and setters for attributes
+
+    std::string getName() {
+        return name;
+    }
+
+    std::string getDOB() {
+        return dob;
+    }
+
+    // Add other necessary methods
+};
+
+// Define a class for the medical information system
+class MedicalInformationSystem {
+private:
+    std::vector<Patient> patients;
+    // Add other necessary attributes and methods
+
+public:
+    // Method to add a new patient to the system
+    void addPatient(std::string name, std::string dob) {
+        Patient newPatient(name, dob);
+        patients.push_back(newPatient);
+        // Implement encryption and authentication logic
+    }
+
+    // Method to retrieve patient information by name
+    Patient* getPatientByName(std::string name) {
+        for (int i = 0; i < patients.size(); i++) {
+            if (patients[i].getName() == name) {
+                return &patients[i];
+            }
+        }
+        return nullptr;
+    }
+
+    // Add other necessary methods
+};
+
+int main() {
+    MedicalInformationSystem mis;
+
+    // Add patients to the system
+    mis.addPatient("John Doe", "01/01/1990");
+    mis.addPatient("Jane Smith", "02/02/1985");
+
+    // Retrieve patient information
+    Patient* patient = mis.getPatientByName("John Doe");
+    if (patient != nullptr) {
+        std::cout << "Patient Name: " << patient->getName() << std::endl;
+        std::cout << "Patient DOB: " << patient->getDOB() << std::endl;
+    } else {
+        std::cout << "Patient not found." << std::endl;
+    }
+
+    return 0;
+}To add few things to it?
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+// Define a class for storing patient information
+class Patient {
+private:
+    std::string name;
+    std::string dob;
+    // Add other necessary attributes
+
+public:
+    // Constructor
+    Patient(std::string name, std::string dob) {
+        this->name = name;
+        this->dob = dob;
+        // Initialize other attributes
+    }
+
+    // Getters and setters for attributes
+
+    std::string getName() {
+        return name;
+    }
+
+    std::string getDOB() {
+        return dob;
+    }
+
+    // Add other necessary methods
+};
+
+// Define a class for the medical information system
+class MedicalInformationSystem {
+private:
+    std::vector<Patient> patients;
+    // Add other necessary attributes and methods
+
+public:
+    // Method to add a new patient to the system
+    void addPatient(std::string name, std::string dob) {
+        Patient newPatient(name, dob);
+        patients.push_back(newPatient);
+        // Implement encryption and authentication logic
+    }
+
+    // Method to retrieve patient information by name
+    Patient* getPatientByName(std::string name) {
+        for (int i = 0; i < patients.size(); i++) {
+            if (patients[i].getName() == name) {
+                return &patients[i];
+            }
+        }
+        return nullptr;
+    }
+
+    // Add other necessary methods
+};
+
+int main() {
+    MedicalInformationSystem mis;
+
+    // Add patients to the system
+    mis.addPatient("John Doe", "01/01/1990");
+    mis.addPatient("Jane Smith", "02/02/1985");
+
+    // Retrieve patient information
+    Patient* patient = mis.getPatientByName("John Doe");
+    if (patient != nullptr) {
+        std::cout << "Patient Name: " << patient->getName() << std::endl;
+        std::cout << "Patient DOB: " << patient->getDOB() << std::endl;
+    } else {
+        std::cout << "Patient not found." << std::endl;
+    }
+
+    return 0;
+}
