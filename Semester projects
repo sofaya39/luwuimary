@@ -1,157 +1,103 @@
-
-
-#include <iostream>
+include <iostream>
 #include <string>
-#include <vector>
+using namespace std;
 
-// Define a class for storing patient information
-class Patient {
-private:
-    std::string name;
-    std::string dob;
-    // Add other necessary attributes
+const int MAX_PATIENTS = 100; // maximum number of patients
 
-public:
-    // Constructor
-    Patient(std::string name, std::string dob) {
-        this->name = name;
-        this->dob = dob;
-        // Initialize other attributes
-    }
-
-    // Getters and setters for attributes
-
-    std::string getName() {
-        return name;
-    }
-
-    std::string getDOB() {
-        return dob;
-    }
-
-    // Add other necessary methods
+struct Patient {
+    string name;
+    int age;
+    string gender;
+    float height;
+    float weight;
+    float bmi;
+    string diagnosis;
+    string labResults[5];
 };
 
-// Define a class for the medical information system
-class MedicalInformationSystem {
-private:
-    std::vector<Patient> patients;
-    // Add other necessary attributes and methods
+Patient patients[MAX_PATIENTS]; // array to store patients
+int numPatients = 0; // number of patients currently in the system
 
-public:
-    // Method to add a new patient to the system
-    void addPatient(std::string name, std::string dob) {
-        Patient newPatient(name, dob);
-        patients.push_back(newPatient);
-        // Implement encryption and authentication logic
-    }
-
-    // Method to retrieve patient information by name
-    Patient* getPatientByName(std::string name) {
-        for (int i = 0; i < patients.size(); i++) {
-            if (patients[i].getName() == name) {
-                return &patients[i];
-            }
+// function to add a new patient
+void addPatient() {
+    if (numPatients < MAX_PATIENTS) {
+        cout << "Enter patient name: ";
+        getline(cin, patients[numPatients].name);
+        cout << "Enter patient age: ";
+        cin >> patients[numPatients].age;
+        cout << "Enter patient gender: ";
+        cin >> patients[numPatients].gender;
+        cout << "Enter patient height (in meters): ";
+        cin >> patients[numPatients].height;
+        cout << "Enter patient weight (in kilograms): ";
+        cin >> patients[numPatients].weight;
+        patients[numPatients].bmi = patients[numPatients].weight / (patients[numPatients].height * patients[numPatients].height);
+        cout << "Enter patient diagnosis: ";
+        cin >> patients[numPatients].diagnosis;
+        for (int i = 0; i < 5; i++) {
+            cout << "Enter lab result " << i+1 << ": ";
+            cin >> patients[numPatients].labResults[i];
         }
-        return nullptr;
+        numPatients++;
     }
-
-    // Add other necessary methods
-};
-
-int main() {
-    MedicalInformationSystem mis;
-
-    // Add patients to the system
-    mis.addPatient("John Doe", "01/01/1990");
-    mis.addPatient("Jane Smith", "02/02/1985");
-
-    // Retrieve patient information
-    Patient* patient = mis.getPatientByName("John Doe");
-    if (patient != nullptr) {
-        std::cout << "Patient Name: " << patient->getName() << std::endl;
-        std::cout << "Patient DOB: " << patient->getDOB() << std::endl;
-    } else {
-        std::cout << "Patient not found." << std::endl;
+    else {
+        cout << "Maximum number of patients reached." << endl;
     }
+}
 
-    return 0;
-}To add few things to it?
-
-#include <iostream>
-#include <string>
-#include <vector>
-
-// Define a class for storing patient information
-class Patient {
-private:
-    std::string name;
-    std::string dob;
-    // Add other necessary attributes
-
-public:
-    // Constructor
-    Patient(std::string name, std::string dob) {
-        this->name = name;
-        this->dob = dob;
-        // Initialize other attributes
+// function to display patient information
+void displayPatient(int index) {
+    cout << "Name: " << patients[index].name << endl;
+    cout << "Age: " << patients[index].age << endl;
+    cout << "Gender: " << patients[index].gender << endl;
+    cout << "Height: " << patients[index].height << " meters" << endl;
+    cout << "Weight: " << patients[index].weight << " kilograms" << endl;
+    cout << "BMI: " << patients[index].bmi << endl;
+    cout << "Diagnosis: " << patients[index].diagnosis << endl;
+    cout << "Lab Results:" << endl;
+    for (int i = 0; i < 5; i++) {
+        cout << "- " << patients[index].labResults[i] << endl;
     }
+}
 
-    // Getters and setters for attributes
-
-    std::string getName() {
-        return name;
-    }
-
-    std::string getDOB() {
-        return dob;
-    }
-
-    // Add other necessary methods
-};
-
-// Define a class for the medical information system
-class MedicalInformationSystem {
-private:
-    std::vector<Patient> patients;
-    // Add other necessary attributes and methods
-
-public:
-    // Method to add a new patient to the system
-    void addPatient(std::string name, std::string dob) {
-        Patient newPatient(name, dob);
-        patients.push_back(newPatient);
-        // Implement encryption and authentication logic
-    }
-
-    // Method to retrieve patient information by name
-    Patient* getPatientByName(std::string name) {
-        for (int i = 0; i < patients.size(); i++) {
-            if (patients[i].getName() == name) {
-                return &patients[i];
-            }
+// function to search for a patient by name
+void searchPatient() {
+    string name;
+    cout << "Enter patient name: ";
+    getline(cin, name);
+    for (int i = 0; i < numPatients; i++) {
+        if (patients[i].name == name) {
+            displayPatient(i);
+            return;
         }
-        return nullptr;
     }
+    cout << "Patient not found." << endl;
+}
 
-    // Add other necessary methods
-};
-
+// main function
 int main() {
-    MedicalInformationSystem mis;
-
-    // Add patients to the system
-    mis.addPatient("John Doe", "01/01/1990");
-    mis.addPatient("Jane Smith", "02/02/1985");
-
-    // Retrieve patient information
-    Patient* patient = mis.getPatientByName("John Doe");
-    if (patient != nullptr) {
-        std::cout << "Patient Name: " << patient->getName() << std::endl;
-        std::cout << "Patient DOB: " << patient->getDOB() << std::endl;
-    } else {
-        std::cout << "Patient not found." << std::endl;
-    }
-
+    int choice;
+    do {
+        cout << "1. Add a new patient" << endl;
+        cout << "2. Search for a patient" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore(); // ignore newline character
+        switch (choice) {
+        case 1:
+            addPatient();
+            break;
+        case 2:
+            searchPatient();
+            break;
+        case 3:
+            cout << "Exiting program..." << endl;
+            break;
+        default:
+            cout << "Invalid choice." << endl;
+        }
+    } while (choice != 3);
     return 0;
 }
+    
